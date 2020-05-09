@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import MainButton from '../components/MainButton'
+import { Ionicons } from '@expo/vector-icons';
 
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
@@ -18,14 +20,14 @@ const GameScreen = props => {
     const [currentGuess, setCurrentGuess] = useState(
         generateRandomBetween(1, 100, props.userChoice)
     );
-    
+
     const [rounds, setRounds] = useState(0);
 
     // these don't get re-rendered to these values each time 
     // Like state except it doesn't re-render everything, its value is just updated
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
-    
+
     const { userChoice, onGameOver } = props;
 
     // Executes after every render cycle, use this to check if person lost
@@ -51,7 +53,7 @@ const GameScreen = props => {
         }
         const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
         setCurrentGuess(nextNumber); // This will now re=render the component
-        setRounds(rounds+1);
+        setRounds(rounds + 1);
     }
 
     return (
@@ -59,8 +61,12 @@ const GameScreen = props => {
             <Text>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
-                <Button title='Lower' onPress={nextGuessHandler.bind(this, 'lower')} />
-                <Button title='Greater' onPress={nextGuessHandler.bind(this, 'greater')} />
+                <MainButton onPress={nextGuessHandler.bind(this, 'lower')} >
+                    <Ionicons name='md-remove' size={24}/>
+                </MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this, 'greater')} >
+                    <Ionicons name='md-add' size={24}/>
+                </MainButton>
             </Card>
         </View>
     )
@@ -76,8 +82,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 20,
-        width: 300,
-        maxWidth: '80%'
+        width: 400,
+        maxWidth: '90%'
     }
 });
 
