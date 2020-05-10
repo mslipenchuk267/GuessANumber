@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert, ScrollView, FlatList } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import MainButton from '../components/MainButton'
@@ -18,11 +18,11 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 };
 
-const renderListItem = (value, numOfRounds) => {
+const renderListItem = (listLength, itemData) => {
     return (
-        <View key={value} style={styles.listItem}>
-            <BodyText>#{numOfRounds}</BodyText>
-            <BodyText>{value}</BodyText>
+        <View key={itemData.index} style={styles.listItem}>
+            <BodyText>#{listLength - itemData.index}</BodyText>
+            <BodyText>{itemData.item}</BodyText>
         </View>
     );
 };
@@ -31,7 +31,7 @@ const GameScreen = props => {
     const initialGuess = generateRandomBetween(1, 100, props.userChoice);
     // After the first render, useState will recognize it has already been inited an won't
     //  reset the states bellow.
-    const [currentGuess, setCurrentGuess] = useState([initialGuess]);
+    const [currentGuess, setCurrentGuess] = useState([initialGuess.toString()]);
     const [pastGuesses, setPastGuesses] = useState([]);
     // these don't get re-rendered to these values each time 
     // Like state except it doesn't re-render everything, its value is just updated
@@ -77,7 +77,7 @@ const GameScreen = props => {
         }
         setCurrentGuess(nextNumber); // This will now re=render the component
         //setRounds(rounds + 1);
-        setPastGuesses(curPastGuesses => [nextNumber, ...curPastGuesses]);
+        setPastGuesses(curPastGuesses => [nextNumber.toString(), ...curPastGuesses]);
     }
 
     return (
@@ -93,9 +93,13 @@ const GameScreen = props => {
                 </MainButton>
             </Card>
             <View style={styles.listContainer}>
-                <ScrollView contentContainerStyle={styles.list}>
+                {/*<ScrollView contentContainerStyle={styles.list}>
                     {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
-                </ScrollView>
+                </ScrollView>*/}<FlatList
+                    keyExtractor={(item) => item}
+                    data={pastGuesses}
+                    renderItem={renderListItem.bind(this, pastGuesses.length)} 
+                    contentContainerStyle={styles.list}/>
             </View>
         </View>
     )
@@ -116,11 +120,11 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        width: '80%',
+        width: '60%',
     },
     list: {
         flexGrow: 1,
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'flex-end'
     },
     listItem: {
@@ -131,7 +135,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: 'white',
         justifyContent: 'space-around',
-        width: '60%',
+        width: '100%'    
     }
 });
 
