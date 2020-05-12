@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     headerBase: {
         width: '100%',
         height: 90,
-        paddingTop: 36,
+        paddingTop: 10,
         alignItems: 'center',
         justifyContent: 'center',
 

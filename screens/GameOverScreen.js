@@ -6,7 +6,7 @@ import {
     Button,
     Image,
     Dimensions,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 
 import BodyText from '../components/BodyText';
@@ -16,28 +16,28 @@ import MainButton from '../components/MainButton'
 
 const GameOverScreen = props => {
     return (
-        <ScrollView>
-            <View style={styles.screen}>
-                <TitleText style={styles.resultTitle}>Game Over!</TitleText>
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../assets/success.png')} local image
-                        //source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/1/12/K2_2006b.jpg'}} // web image
-                        style={styles.image}
-                        resizeMode='cover'
-                        fadeDuration={200} />
-                </View>
-                <View style={styles.resultContainer}>
-                    <BodyText style={styles.resultText}>
-                        Your phone needed <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds
+            <ScrollView>
+                <View style={styles.screen}>
+                    <TitleText style={styles.resultTitle}>Game Over!</TitleText>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../assets/success.png')} local image
+                            //source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/1/12/K2_2006b.jpg'}} // web image
+                            style={styles.image}
+                            resizeMode='cover'
+                            fadeDuration={200} />
+                    </View>
+                    <View style={styles.resultContainer}>
+                        <BodyText style={styles.resultText}>
+                            Your phone needed <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds
                 to guess the number <Text style={styles.highlight}>{props.userNumber}</Text>
-                    </BodyText>
-                </View>
-                <MainButton onPress={props.onRestart} >
-                    NEW GAME
+                        </BodyText>
+                    </View>
+                    <MainButton onPress={props.onRestart} >
+                        NEW GAME
             </MainButton>
-            </View>
-        </ScrollView>
+                </View>
+            </ScrollView>
     );
 };
 
