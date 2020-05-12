@@ -25,7 +25,7 @@ const GameOverScreen = props => {
                         //source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/1/12/K2_2006b.jpg'}} // web image
                         style={styles.image}
                         resizeMode='cover'
-                        fadeDuration={300} />
+                        fadeDuration={200} />
                 </View>
                 <View style={styles.resultContainer}>
                     <BodyText style={styles.resultText}>
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingVertical: 10
     },
     image: {
         width: '100%',
