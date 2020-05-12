@@ -1,5 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Alert, ScrollView, FlatList } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    Button, 
+    Alert, 
+    ScrollView, 
+    FlatList,
+    Dimensions
+} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import MainButton from '../components/MainButton'
@@ -59,25 +68,31 @@ const GameScreen = props => {
         if (direction === 'lower') {
             currentHigh.current = currentGuess;
         } else {
-            currentLow.current = currentGuess;
+            currentLow.current = currentGuess + 1;
         }
         let nextNumber = generateRandomBetween(
             currentLow.current,
             currentHigh.current,
             currentGuess
         );
-        if (nextNumber != userChoice) {
-            while (pastGuesses.includes(nextNumber)) {
+        /*if (nextNumber != userChoice) {
+            while (pastGuesses.includes(String(nextNumber))) {
                 nextNumber = generateRandomBetween(
                     currentLow.current,
                     currentHigh.current,
-                    currentGuess
+                    nextNumber
                 );
             }
-        }
+        }*/
         setCurrentGuess(nextNumber); // This will now re=render the component
         //setRounds(rounds + 1);
         setPastGuesses(curPastGuesses => [nextNumber.toString(), ...curPastGuesses]);
+    }
+
+    let listContainerStyle = styles.listContainer;
+    // check if device size is small
+    if (Dimensions.get('window').width < 300) {
+        listContainerStyle = styles.listContainerBig;
     }
 
     return (
@@ -92,7 +107,7 @@ const GameScreen = props => {
                     <Ionicons name='md-add' size={24} />
                 </MainButton>
             </Card>
-            <View style={styles.listContainer}>
+            <View style={listContainerStyle}>
                 {/*<ScrollView contentContainerStyle={styles.list}>
                     {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
                 </ScrollView>*/}<FlatList
@@ -114,13 +129,18 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 20,
+        //marginTop: 20,
+        marginTop: Dimensions.get('window').height > 600 ? 20 : 10,
         width: 400,
         maxWidth: '90%'
     },
     listContainer: {
         flex: 1,
-        width: '60%',
+        width: '60%'
+    },
+    listContainerBig: {
+        flex: 1,
+        width: '80%'
     },
     list: {
         flexGrow: 1,
