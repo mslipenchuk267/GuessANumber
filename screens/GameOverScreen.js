@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     imageContainer: {
-        width: Dimensions.get('window').width * 0.7,
-        height: Dimensions.get('window').width * 0.7,
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').width * 0.5,
         borderRadius: Dimensions.get('window').width / 2,
         borderWidth: 3,
         borderColor: 'black',
